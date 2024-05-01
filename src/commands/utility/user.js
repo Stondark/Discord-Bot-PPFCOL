@@ -13,13 +13,14 @@ module.exports = {
     async execute(interaction) {
         try {
             await interaction.deferReply();
+
             const user = interaction.options.getUser('target');
             const attachment = new AttachmentBuilder('https://i.imgur.com/wf1T3T6.png');
             let filter = {};
             let userId;
 
             filter = (user) ? { tag_discord: user.username } : { tag_discord: interaction.user.username };
-            userId = (user) ? user.id : interaction.id;
+            userId = (user) ? user.id : interaction.user.id;
             let userInfo = await findByFilterDB(userSchema, filter);
             if (!userInfo) {
                 await interaction.reply("No se encontró información, por favor regístrate con **/register**");

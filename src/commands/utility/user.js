@@ -12,6 +12,7 @@ module.exports = {
         .addUserOption(option => option.setName('target').setDescription('El usuario')),
     async execute(interaction) {
         try {
+            await interaction.deferReply();
             const user = interaction.options.getUser('target');
             const attachment = new AttachmentBuilder('https://i.imgur.com/wf1T3T6.png');
             let filter = {};
@@ -54,7 +55,7 @@ module.exports = {
                 .setFooter({ text: `\u200b`, iconURL: 'https://i.imgur.com/MKEfQXJ.png' })
                 .setColor("#E1FF00");
             embeds.push(userEmbed);
-            await embedPaginator(interaction, embeds);
+            await embedPaginator(interaction, embeds, { previewDefer: true });
         } catch (error) {
             console.log(error)
         }
